@@ -6,46 +6,33 @@ console.log('=========================');
 console.log('\nPlease enter the operator: ');
 const operator = readline.prompt();
 
-console.log('\nPlease enter the first number: ');
-const firstArgument = readline.prompt();
-const firstNumber = +firstArgument;
+console.log('\nHow many numbers to you want to ' + operator + '?');
+const response = readline.prompt();
+const iterations = +response;
 
-console.log('\nPlease enter the second number: ');
-const secondArgument = readline.prompt();
-const secondNumber = +secondArgument;
+let arr = [];
+arr.length = iterations;
 
-let answer;
-
-// Example using if and else
-/* if (operator === '+') {
-    answer = firstNumber + secondNumber;
-} else if (operator === '-') {
-    answer = firstNumber - secondNumber;
-} else if (operator === '*') {
-    answer = firstNumber * secondNumber;
-} else if (operator === '/') { 
-    answer = firstNumber / secondNumber;
-} else {
-    console.log('\n' + operator + ' is not a valid operator');
-} */
-
-// Example using switch
-switch (operator) {
-    case '+':
-        answer = firstNumber + secondNumber;
-        break;
-    case '-':
-        answer = firstNumber - secondNumber;    
-        break;
-    case '*':
-        answer = firstNumber * secondNumber;
-        break;   
-    case '/':
-        answer = firstNumber / secondNumber;
-        break    
-    default:
-        console.log('\n' + operator + ' is not a valid operator');
-        break;
+for (let i = 0; i < arr.length; i++) {
+    console.log('\nPlease enter number ' + (i + 1) + ':');
+    const argument = readline.prompt();
+    // const number = +argument;
+    arr[i] = +argument;
 }
 
-console.log('\nThe answer is: ' + firstNumber + operator + secondNumber + ' = ' + answer + '\n');
+let answer = arr[0];
+for (let i = 1; i < arr.length; i++) {
+    if (operator === '+') {
+        answer += arr[i];
+    } else if (operator === '-') {
+        answer -= arr[i];
+    } else if (operator === '*') {
+        answer *= arr[i];
+    } else if (operator === '/') { 
+        answer /= arr[i];
+    } else {
+        answer = ('not possible as you entered ' + operator + ' which is not a valid operator!');
+    }
+}
+
+console.log('\nThe answer is ' + answer + '\n');
