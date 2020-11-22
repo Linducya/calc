@@ -1,27 +1,44 @@
 const readline = require('readline-sync');
 
+function printWelcomeMessage() {
 console.log('\nWelcome to the calculator!');
 console.log('=========================');
-
-console.log('\nPlease enter the operator: ');
-const operator = readline.prompt();
-
-console.log('\nHow many numbers to you want to ' + operator + '?');
-const response = readline.prompt();
-const iterations = +response;
-
-let arr = [];
-arr.length = iterations;
-
-for (let i = 0; i < arr.length; i++) {
-    console.log('\nPlease enter number ' + (i + 1) + ':');
-    const argument = readline.prompt();
-    // const number = +argument;
-    arr[i] = +argument;
 }
 
-let answer = arr[0];
-for (let i = 1; i < arr.length; i++) {
+function getResponse(prompt) {
+    console.log('\n' + prompt);
+    return readline.prompt();
+}
+
+function convertNumber(prompt) {
+    let response; 
+    do {
+        response = +getResponse(prompt); 
+    } while (isNaN(response));  
+    return response;
+}
+
+function getOperator() {
+    let operator;
+    do {
+    operator = getResponse('\nPlease enter the operator: ');
+    } while (!(operator == '+' || operator == '-' || operator == '*' || operator == '/'));
+    return operator;
+}
+
+function getNumberArray(operator) {
+    const ITERATIONS = convertNumber('\nHow many numbers to you want to ' + operator + '?');
+    let arr = [];
+    arr.length = ITERATIONS;
+    for (let i = 0; i < arr.length; i++) {
+    arr[i] = convertNumber('\nPlease enter number ' + (i + 1) + ':');
+    }
+return arr;    
+}
+
+function getAnswer(arr, operator) {
+    let answer = arr[0];
+    for (let i = 1; i < arr.length; i++) {
     if (operator === '+') {
         answer += arr[i];
     } else if (operator === '-') {
@@ -30,9 +47,20 @@ for (let i = 1; i < arr.length; i++) {
         answer *= arr[i];
     } else if (operator === '/') { 
         answer /= arr[i];
-    } else {
-        answer = ('not possible as you entered ' + operator + ' which is not a valid operator!');
-    }
+    } 
+}
+return answer;
 }
 
-console.log('\nThe answer is ' + answer + '\n');
+
+function performOneCalculation() {
+    const OPERATOR = getOperator();
+    const MYARRAY = getNumberArray(OPERATOR);
+    const ANSWER = getAnswer(MYARRAY, OPERATOR);
+    return console.log('\nThe answer is ' + ANSWER + '\n');
+}
+
+printWelcomeMessage();
+while (true) {
+performOneCalculation();
+}
